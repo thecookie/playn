@@ -129,33 +129,88 @@ public class JavaJson implements Json {
     }
 
     public boolean getBoolean(String key) {
-      return jso.optBoolean(key);
+      try {
+        return jso.getBoolean(key);
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public boolean getBoolean(String key, boolean def) {
+      return jso.optBoolean(key, def);
     }
 
     public int getInt(String key) {
-      return jso.optInt(key);
+      try {
+        return jso.getInt(key);
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public int getInt(String key, int def) {
+      return jso.optInt(key, def);
     }
 
     public double getNumber(String key) {
-      return jso.optDouble(key);
+      try {
+        return jso.getDouble(key);
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public double getNumber(String key, double def) {
+      return jso.optDouble(key, def);
     }
 
     public String getString(String key) {
-      return jso.optString(key);
+      try {
+        return jso.getString(key);
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public String getString(String key, String def) {
+      return jso.optString(key, def);
     }
 
     public Json.Object getObject(String key) {
+      try {
+        return new JavaObject(jso.getJSONObject(key));
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    public Json.Object getObject(String key, Json.Object def) {
       JSONObject o = jso.optJSONObject(key);
       return o == null ? null : new JavaObject(o);
     }
 
     public Json.Array getArray(String key) {
+      try {
+        return new JavaArray(jso.getJSONArray(key));
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    public Json.Array getArray(String key, Json.Array def) {
       JSONArray a = jso.optJSONArray(key);
-      return a == null ? null : new JavaArray(a);
+      return a == null ? def : new JavaArray(a);
     }
 
     public <T> TypedArray<T> getArray(String key, Class<T> arrayType) {
-      return asTypedArray(jso.optJSONArray(key), arrayType);
+      try {
+        return asTypedArray(jso.getJSONArray(key), arrayType);
+      } catch (JSONException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public <T> TypedArray<T> getArray(String key, Class<T> arrayType, TypedArray<T> def) {
+      JSONArray a = jso.optJSONArray(key);
+      return a == null ? def : asTypedArray(a, arrayType);
     }
 
     public boolean containsKey(String key) {

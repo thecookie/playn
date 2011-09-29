@@ -144,8 +144,8 @@ public interface Json {
     int length();
 
     /**
-     * Gets the boolean value at the given index, or <code>false</code> if there is no value at this
-     * index.
+     * Gets the boolean value at the given index.
+     *
      */
     boolean getBoolean(int index);
 
@@ -200,33 +200,39 @@ public interface Json {
      * key.
      */
     boolean getBoolean(String key);
+    boolean getBoolean(String key, boolean def);
 
     /**
      * Gets the integer value at the given key, or <code>0</code> if there is no value at this key.
      */
     int getInt(String key);
+    int getInt(String key, int def);
 
     /**
      * Gets the double value at the given key, or <code>0</code> if there is no value at this key.
      */
     double getNumber(String key);
+    double getNumber(String key, double def);
 
     /**
      * Gets the string value at the given key, or <code>null</code> if there is no value at this
      * key.
      */
     String getString(String key);
+    String getString(String key, String def);
 
     /**
      * Gets the object value at the given key, or <code>null</code> if there is no value at this
      * key.
      */
     Object getObject(String key);
+    Object getObject(String key, Object def);
 
     /**
      * Gets the array value at the given key, or <code>null</code> if there is no value at this key.
      */
     Array getArray(String key);
+    Array getArray(String key, Array def);
 
     /**
      * Gets an array at the given key that assumes its values are of the given json type, or
@@ -237,6 +243,7 @@ public interface Json {
      * @throws IllegalArgumentException if jsonType is of an invalid type.
      */
     <T> TypedArray<T> getArray(String key, Class<T> valueType);
+    <T> TypedArray<T> getArray(String key, Class<T> valueType, TypedArray<T> def);
 
     /**
      * Returns true if this object contains a value at the specified key, false if not.
